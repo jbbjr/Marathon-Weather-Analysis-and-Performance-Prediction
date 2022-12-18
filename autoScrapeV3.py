@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import Select
 
 # fix executable_path error by importing the Service class
 from selenium.webdriver.chrome.service import Service
-s = Service(executable_path=r"C:\Users\jbbla\OneDrive\Documents\marathonScrape\chromedriver.exe")
+s = Service(executable_path=r"driver path")
 
 # retrives an integer value representing how many columns are in a given table
 def getLength():
@@ -83,7 +83,7 @@ def getURLs(yearURL):
             return URLs
 
 # set up our web driver
-path = r"C:\Users\jbbla\OneDrive\Documents\marathonScrape\chromedriver.exe"
+path = r"driver path"
 driver = webdriver.Chrome(service=s)
 
 URLs = getURLs('http://www.marathonguide.com/results/browse.cfm?Year=2020')
@@ -99,7 +99,7 @@ for link in range(len(URLs)):
     
     filename = driver.title
     filename = filename.replace(" ", "_").replace("/", "_")
-    dir = str(r"C:\Users\jbbla\OneDrive\Documents\Races2020" + "\\" + str(filename) + ".csv")
+    dir = str(r"path" + "\\" + str(filename) + ".csv")
 
     # get the drop down for overall racers
     dropDown = Select(driver.find_element(By.NAME, "RaceRange"))
