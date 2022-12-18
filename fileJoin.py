@@ -1,15 +1,19 @@
 import pandas as pd
 import glob
 
-files = glob.glob(r'C:\Users\jbbla\OneDrive\Documents\Races2018//*.csv')
+# races are saved as individual files, we need to create a single file for race results in a year before we send to BigQuery
+files = glob.glob(r'path//*.csv')
 
 allRaces = pd.DataFrame()
 
+# iterate through each race and concatenate until completion 
 for file in files:
     df = pd.read_csv(file)
     allRaces = pd.concat([allRaces, df])
 
-dir = str(r"C:\Users\jbbla\OneDrive\Documents\concatRaces" + "\\" + "races2018" + ".csv")
+    
+# create the file and then upload to BigQuery
+dir = r"path"
 allRaces.to_csv(dir)
 
 print(allRaces.head)
