@@ -17,7 +17,7 @@ main_df = pd.DataFrame()
 
 
 # a file that represents a query of all distinct instaces of (Dates, Locations, Races). Date and Location for finding historical weather values, Race for joining the weather data back in BigQuery
-distinct_vals = pd.read_csv(r'C:\Users\jbbla\OneDrive\Documents\WeatherOut\2019P2.csv')
+distinct_vals = pd.read_csv(r'path')
 
 # lists Date, Location, Race that we can iterate through for weather API queries 
 dt = distinct_vals['Date'].values.tolist()
@@ -26,19 +26,27 @@ race = distinct_vals['Race'].values.tolist()
  
 # alters Location to meet weather API query syntax requirements
 for i in range(len(dt)):
-    loc[i] = loc[i].replace('USA', ',USA').replace('Canada', ',Canada').replace(' ', '').replace('Decon','Devon').replace('GrandCayman,CaymanIslands', 'KY1-1100').replace('HiltonHead','HiltonHeadIsland').replace('CatalinaIsland', 'Avalon').replace('Meeman-ShelbyStatePark', 'Millington').replace('TwenteAirport', 'Enschede').replace('HyaktoTanner', 'Tanner').replace('PortOrchard', 'Bremerton').replace('StHelier,Jersey', 'SaintHelier').replace('Surrey', 'Guildford').replace('WestSussex', 'Chichester').replace('Cheshire', 'LittleBudworth').replace('OuterBanks', 'KillDevilHills').replace('RNASYoevilton', 'Yeovilton').replace('MtHood', 'HoodRiver').replace('TumonBay','Dededo').replace('Snowdonia', 'Rhiwbryfdir').replace('PoipuBeachKauai', 'Poipu').replace('KeyWest', '33040').replace('UnicoiStatePark', 'Helen').replace('KingGeorgeIsland,Antarctica', '-62.033,-58.35').replace('Connemara', 'Galway').replace('Pembrokeshire,UnitedKingdom', 'Pembrokeshire,Wales') 
+    loc[i] = loc[i].replace() # usually a few things need to change depending on the year, fix anything here with .replace method
 
 # iterate through all Date, Location, Race values until completion 
 for i in range(len(dt)):
     # if you set a variable equal to the query request with values you want to use the replace method on, the pull will fail
-    query = BaseURL + '?aggregateHours=24&startDateTime=' + dt[i] + 'T00:00:00&endDateTime=' + dt[i] + 'T23:00:00&unitGroup=us&location=' + loc[i] + '&contentType=csv&key=MFSYXWD9DZQCB6CJ33W45TXFH'
+    # aggregateHours=24 (allows one query per date and location, in time window of specified startDateTune and endDateTime)
+    # dt[i] = Date that corresponds with query
+    # loc[i] = Location that corresponds with the query    
+    query = BaseURL + '?aggregateHours=24&startDateTime=' + dt[i] + 'T00:00:00&endDateTime=' + dt[i] + 'T23:00:00&unitGroup=us&location=' + loc[i] + '&contentType=csv&key=KEY'
     
+    # get the individual query into a temporary df     
     temp_df = pd.read_csv(query) 
+    
+    # tack on the corresponding race, which will be used to join back the data in BigQuery     
     temp_df.insert(len(temp_df.columns), "Race", race[i])
+    
+    # concatinate the query with the key back to the main df     
     main_df = pd.concat([main_df, temp_df])
    
 # send our compiled pull request to a csv
-dir = r'C:\Users\jbbla\OneDrive\Documents\WeatherOut\races2019QueryRequestP2.csv'
+dir = r'path'
 main_df.to_csv(dir)
 
 print('Pull request complete!')
