@@ -14,29 +14,34 @@ As an avid marathoner, myself and others know how much preparation goes into a r
 
 ## Terminology
 This section is intended for readers unfamiliar with programming or econometric fundimentals. (you can probably skip this)
-<dl>
-  <dt>Python</dt>
-  <dd>A general purpose open source programming language.</dd>
-  <dd>For our use case, it helps us collect data and semi-automate the process.</dd>
-  <dt>SQL</dt>
-  <dd>Structured Query Language</dd>
-  <dd>BigQuery is Google's "version" SQL</dd> 
-  <dd>For our use case, we can manipulate and organize all or large portions of our data at once</dd> 
-  <dt>API</dt>
-  <dd>Application Programming Interface</dd>
-  <dd>For our use case, we ask the API for certain things with code and it returns them to us</dd>
-  <dt>Pandas</dt>
-  <dd>A software library that helps us extrapolate and analyze data</dd>
-  <dt>Selenium</dt>
-  <dd>A software library that allows us to automate a webdriver by writing code</dd>
-  <dt>df</dt>
-  <dd>a Pandas dataframe (essentially a very maluable Excel sheet)</dd>
-  <dt>XPATH</dt>
-  <dd>a line of code is equal to a piece of a website</dd>
-  <dd>For our use case, this may be a button to click, or a cell in a table</dd>
-  <dt>Function</dt>
-  <dd>a few lines of code that complete a specific task (like an Excel formula)</dd>
-</dl>
+
+#### Programming 
+- **Python**: 
+  - A general purpose open source programming language. 
+  - For our use case, it helps us collect data and semi-automate the process.
+- **Structured Query Language (SQL)**: 
+  - For our use case, we can manipulate and organize all or large portions of our data at once. BigQuery is Google's "version" SQL.
+- **API**:
+  - Application Programming Interface.
+  - For our use case, we ask the API for certain things with code and it returns them to us.  
+- **Pandas**:
+  - A software library that helps us extrapolate and analyze data.
+- **Selenium**:
+  - A software library that allows us to automate a webdriver by writing code.
+- **df**:
+  - A Pandas dataframe (essentially a very maluable Excel sheet).
+- **XPATH**:
+  - A line of code that equates to a piece of a website.
+  - For our use case, this may be a button to click, or a cell in a table.
+- **Function**:
+  - A few lines of code that complete a specific task (like an Excel formula).
+- **Database**
+  - A collection of datasets (like an Excel file).
+- **Dataset**
+  - A collection of tables (Excel sheets). 
+#### Econometrics
+- **Fixed Effect**:
+  - stuff 
 
 ## Marathon Data Collection and Manipulation
 Gathering the marathon data requires one large task: **Web Scraping**. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons and their results in the English speaking world, from 2000 to present day. However, to perform analysis on the data, it needs to be scraped and formatted for our use case. 
@@ -54,10 +59,10 @@ To scrape data from the site, I created `autoScrape`, which utilizes Selenium an
 Once a year is scraped, we end up with a folder conaining CSV files for each individual race in a given year. To combine all of the races into one file I wrote a quick `fileJoin` script which simply creates a CSV housing the data for an entire year of races. We then send this off to BigQuery for some additional cleaning and querying.
 
 ### BigQuery
-Now that our marathon data is into BigQuery, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
+Now that our marathon data is into our database, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
 
 ## Weather Data Colleciton and Manipulation
-Now that we have marathon data in BigQuery we need to collect the weather data that is associated with each row. This is a little more complicated than just looking up the weather and. 
+Now that we have marathon data in BigQuery we need to collect the weather data that is associated with each row. This is a little more complicated than just looking up the weather and adding it to the data 
 
 
 
