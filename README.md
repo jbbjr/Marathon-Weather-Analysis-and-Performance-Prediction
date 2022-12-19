@@ -12,4 +12,6 @@ As an avid marathoner, myself and others know how much preparation goes into a r
 - Interpretation and Visualization
 
 ## Marathon Data Collection and Manipulation
-Gathering the marathon data requires one large task: **Web Scraping**.
+Gathering the marathon data requires one large task: **Web Scraping**. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons and their results in the English speaking world, from 2000 to present day. However, to perform analysis on the data, it needs to be scraped and formatted for our use case. 
+
+
