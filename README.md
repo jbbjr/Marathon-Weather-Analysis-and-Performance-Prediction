@@ -7,7 +7,7 @@ As an avid marathoner, myself and others know how much preparation goes into a r
 ## Organization of Project
 - [Terminology](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#terminology)
 - [Marathon Data Collection and Manipulation](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#marathon-data-collection-and-manipulation)
-- Weather Data Colleciton and Manipulation
+- [Weather Data Colleciton and Manipulation](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#weather-data-colleciton-and-manipulation)
 - Finalizing our Data
 - Modeling
 - Interpretation and Visualization
@@ -44,16 +44,19 @@ Gathering the marathon data requires one large task: **Web Scraping**. Fortunate
 To scrape data from the site, I created `autoScrape`, which utilizes Selenium and Pandas.
 
 ### `autoScrape` in summary:
->  - Input a URL that contains a years worth of marathon URLs
->  - Create a list of the marathon URLs and iterate through them
->  - For each URL, find the amount of columns and their titles by XPATH
-> - For the URL, use table cells XPATH to collect the data by that is on the page and append it to a df...  If a more results XPATH exists, click it. 
-> - When the more results button no longer exists, convert the df to a csv and put it in a folder
-> - Move to next race and repeat until completion
+- Input a URL that contains a years worth of marathon URLs
+- Create a list of the marathon URLs and iterate through them
+- For each URL, find the amount of columns and their titles by XPATH
+- For the URL, use table cells XPATH to collect the data by that is on the page and append it to a df...  If a more results XPATH exists, click it. 
+- When the more results button no longer exists, convert the df to a csv and put it in a folder
+- Move to next race and repeat until completion
 
 Once a year is scraped, we end up with a folder conaining CSV files for each individual race in a given year. To combine all of the races into one file I wrote a quick `fileJoin` script which simply creates a CSV housing the data for an entire year of races. We then send this off to BigQuery for some additional cleaning and querying.
 
 ### BigQuery
+Now that our marathon data is into BigQuery, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
+
+## Weather Data Colleciton and Manipulation
 
 
 
