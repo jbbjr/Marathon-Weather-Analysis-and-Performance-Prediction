@@ -20,6 +20,7 @@ This section is intended for readers unfamiliar with programming or econometric 
   <dd>For our use case, it helps us collect data and semi-automate the process.</dd>
   <dt>SQL</dt>
   <dd>Structured Query Language</dd>
+  <dd>BigQuery is Google's "version" SQL</dd> 
   <dd>For our use case, we can manipulate and organize all or large portions of our data at once</dd> 
   <dt>API</dt>
   <dd>Application Programming Interface</dd>
@@ -42,13 +43,18 @@ Gathering the marathon data requires one large task: **Web Scraping**. Fortunate
 
 To scrape data from the site, I created `autoScrape`, which utilizes Selenium and Pandas.
 
-`autoScrape` in summary:
+### `autoScrape` in summary:
 >  - Input a URL that contains a years worth of marathon URLs
->  - Create a list of the marathon URLs and iterate through them : getURLs():
->  - For each URL, find the amount of columns and their titles by XPATH : getLength(): and getTitles(length):
+>  - Create a list of the marathon URLs and iterate through them
+>  - For each URL, find the amount of columns and their titles by XPATH
 > - For the URL, use table cells XPATH to collect the data by that is on the page and append it to a df...  If a more results XPATH exists, click it. 
 > - When the more results button no longer exists, convert the df to a csv and put it in a folder
 > - Move to next race and repeat until completion
+
+Once a year is scraped, we end up with a folder conaining CSV files for each individual race in a given year. To combine all of the races into one file I wrote a quick `fileJoin` script which simply creates a CSV housing the data for an entire year of races. We then send this off to BigQuery for some additional cleaning and querying.
+
+### BigQuery
+
 
 
 
