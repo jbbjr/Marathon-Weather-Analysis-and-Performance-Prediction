@@ -56,13 +56,16 @@ To scrape data from the site, I created `autoScrape`, which utilizes Selenium an
 - When the more results button no longer exists, convert the df to a csv and put it in a folder
 - Move to next race and repeat until completion
 
-Once a year is scraped, we end up with a folder conaining CSV files for each individual race in a given year. To combine all of the races into one file I wrote a quick `fileJoin` script which simply creates a CSV housing the data for an entire year of races. We then send this off to BigQuery for some additional cleaning and querying.
+Once a year is scraped, we end up with a folder conaining CSV files for each individual race in a given year. To combine all of the races into one file I wrote a quick `fileJoin` script which simply creates a CSV housing the data for an entire year of races. We then send this off to our BigQuery database for some additional cleaning and querying.
 
 ### BigQuery
 Now that our marathon data is into our database, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
 
 ## Weather Data Colleciton and Manipulation
-Now that we have marathon data in BigQuery we need to collect the weather data that is associated with each row. This is a little more complicated than just looking up the weather and adding it to the data 
+Now that we have marathon data in BigQuery we need to collect the weather data that is associated with each row. This is a little more complicated than just looking up the weather and adding it to the database. We won't actually have to find weather data for each individual instance of a runner, just for the race. This should make intuitive sense (the weather is the same for everyone who runs the race).
+
+Here is what we need:
+- 
 
 
 
