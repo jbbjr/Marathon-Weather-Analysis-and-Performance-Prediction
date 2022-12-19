@@ -57,6 +57,7 @@ Once a year is scraped, we end up with a folder conaining CSV files for each ind
 Now that our marathon data is into BigQuery, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
 
 ## Weather Data Colleciton and Manipulation
+Now that we have marathon data in BigQuery we need to collect the weather data that is associated with each row. This is a little more complicated than just looking up the weather and. 
 
 
 
