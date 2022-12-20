@@ -9,7 +9,7 @@ As an avid marathoner, myself and others know how much preparation goes into a r
 - [Marathon Data Collection and Manipulation](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#marathon-data-collection-and-manipulation)
 - [Weather Data Colleciton and Manipulation](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#weather-data-colleciton-and-manipulation)
 - [Finalizing our Data](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#finalizing-our-data)
-- Modeling
+- [Modeling](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#modeling)
 - Interpretation and Visualization
 
 ## Terminology
@@ -98,15 +98,31 @@ All we have to do is send a bunch of these to the Visual Crossing API and it wil
 ### `vcRequests` in summary:
 - Read the CSV file that `distinctDateLoc` created
 - Create lists of Dates, Locations, and Races 
-- For each Date, Location, and Race, format the query
+- For each Date and Location, format the query
   - Format the query
-  - Query the corresponding weather data   
+  - Query the corresponding weather data
+  - Add the correspond race to the weather data (we will need this later)
   - Append the data to a df
 
 When this is complete, we end up with a CSV file of weather data that corresponds to each row of our `distinctDateLoc` CSV. Now it's time to head back to BigQuery and finalize our data.  
 
 ## Finalizing our Data
-hey!
+Now we have our marathon data and the corresponding weather data in BigQuery. The next step is to combine the data so we can conduct analyses and start modeling. To finalize the data for the given year we need to do two things:
+- Run the `weatherJoin` query to connect the marathon and weather data
+  >  - This performs a left join with our marathon data and weather data. 
+  >    - Meaning, weather data fills out wherever the marathon race matches the weather race. 
+  >    - (This is why we included Race earlier in `vcRequests`)
+- Use `bqRequests` to get the finalized data from BigQuery to a CSV so we can do some modeling.
+  >  - Similar to `vcRequests`, we know are asking the BigQuery API to send us our tables so we can
+  >    - Put them in a df
+  >    - And then send them to a CSV file
+Once this is done, we have the necessary data to conduct analyses on a year of marathons. So this entire process just needs to be repeated for every year of marathon data available to us. 
+
+## Modeling
+
+
+
+*Note: The end goal is to conduct analysis on all 22 years, but I wanted to get something up with what I currently have gathered*
 
 
 
