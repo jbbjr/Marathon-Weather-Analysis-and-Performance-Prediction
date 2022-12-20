@@ -62,10 +62,19 @@ Once a year is scraped, we end up with a folder conaining CSV files for each ind
 Now that our marathon data is into our database, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
 
 ## Weather Data Colleciton and Manipulation
-Now that we have marathon data in BigQuery we need to collect the weather data that is associated with each row. This is a little more complicated than just looking up the weather and adding it to the database. We won't actually have to find weather data for each individual instance of a runner, just for the race. This should make intuitive sense (the weather is the same for everyone who runs the race).
+Now that we have marathon data in BigQuery, we need to collect the weather data that is associated with it. This is a little more complicated than just looking up the weather and adding it to the database. We won't actually have to find weather data for each individual instance of a runner, just for the race. This should make intuitive sense (the weather is the same for everyone who runs the race).
 
-Here is what we need:
-- 
+Here is what we need to do:
+- Find each Race that occured
+- The location the race occured in
+- The date the race occured on
+
+To do this we can utilize `distinctDateLoc` to query a table of these instances. We then export the results as a CSV and go back to Python to gather our weather data.
+
+Now that we're back in Python we need to access the [Visual Crossing](https://www.visualcrossing.com/) weather API.
+
+
+
 
 
 
