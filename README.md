@@ -8,7 +8,7 @@ As an avid marathoner, myself and others know how much preparation goes into a r
 - [Terminology](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#terminology)
 - [Marathon Data Collection and Manipulation](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#marathon-data-collection-and-manipulation)
 - [Weather Data Colleciton and Manipulation](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#weather-data-colleciton-and-manipulation)
-- Finalizing our Data
+- [Finalizing our Data](https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/edit/main/README.md#finalizing-our-data)
 - Modeling
 - Interpretation and Visualization
 
@@ -31,7 +31,7 @@ This section is intended for readers unfamiliar with programming or econometric 
 - **df**:
   - A Pandas dataframe (essentially a very maluable Excel sheet).
 - **XPATH**:
-  - A line of code that equates to a piece of a website.
+  - A line of code refrencing a piece of a website.
   - For our use case, this may be a button to click, or a cell in a table.
 - **Function**:
   - A few lines of code that complete a specific task (like an Excel formula).
@@ -79,12 +79,21 @@ Now that we're back in Python we need to access the [Visual Crossing](https://ww
 To gather our weather data we need to send requests to the Visual Crossing API. If formatted correctly, it returns us the data in the requested format. We can temporarily store the data in a df and then send it to a CSV file. Since Visual Crossing can only send us one instance of weather data per request, we need to write some code to get all the necesarry weather data for the year into one CSV.    
 
 ### Formatting the Request
-Here is an example of a query request
+Here is an example of a query request. It's kind of like a link to a website. We give it to the Visual Crossing API, and it looks it up and returns the results to us! 
 ```
-https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?
-locations=Herndon,VA,20170&aggregateHours=24&unitGroup=us&shortColumnNames=false&contentType=csv&key=YOURAPIKEY
+https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history?
+aggregateHours=24&startDateTime=2019-05-13T00:00:00&endDateTime=2019-05-13T23:00:00&unitGroup=us
+&location=Portland,ME,USA&contentType=csv&key=APIKEY'
 ```
+This query is requesting data for:
+- The average of all weather metrics (aggregateHours=)
+  - on March 13, 2019 from 12:00 AM to 11:59 PM (start/endDateTime=)
+  - in Portland, Maine (location=)
+- Saved as a CSV (contentType=)
+- In US units (unitGroup=)
+- For me (key=)
 
+All we have to do is send a bunch of these to the Visual Crossing API and it will give us the weather data for all of our races. `vcRequests` can do this for us automatically.
 
 ### `vcRequests` in summary:
 - Read the CSV file that `distinctDateLoc` created
@@ -96,6 +105,8 @@ locations=Herndon,VA,20170&aggregateHours=24&unitGroup=us&shortColumnNames=false
 
 When this is complete, we end up with a CSV file of weather data that corresponds to each row of our `distinctDateLoc` CSV. Now it's time to head back to BigQuery and finalize our data.  
 
+## Finalizing our Data
+hey!
 
 
 
