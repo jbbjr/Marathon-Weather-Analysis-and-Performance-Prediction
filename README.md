@@ -61,7 +61,7 @@ To scrape data from the site, we can implement `autoScrape`, which utilizes Sele
 Once a year is scraped, we end up with a folder conaining CSV files for each individual race in a given year. To combine all of the races into one file we quickly run the `fileJoin` script. This just creates a CSV housing the data for an entire year of races. We then send this off to our BigQuery database for some additional cleaning and querying.
 
 ### BigQuery
-Now that our marathon data is into our database, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
+Now that our marathon data is in our database, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
 
 ## Weather Data Colleciton and Manipulation
 Now that we have marathon data in BigQuery, we need to collect the weather data that is associated with it. This is a little more complicated than just looking up the weather and adding it to the database. We won't actually have to find weather data for each individual instance of a runner, just for the race. This should make intuitive sense (the weather is the same for everyone who runs the race).
@@ -91,7 +91,7 @@ This query is requesting data for:
   - in Portland, Maine (location=)
 - Saved as a CSV (contentType=)
 - In US units (unitGroup=)
-- For me (key=)
+- Using my account (key=)
 
 All we have to do is send a bunch of these to the Visual Crossing API and it will give us the weather data for all of our races. `vcRequests` can do this for us automatically.
 
