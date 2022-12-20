@@ -46,17 +46,19 @@ This section is intended for readers unfamiliar with programming or econometric 
 ## Marathon Data Collection and Manipulation
 Gathering the marathon data requires one large task: **Web Scraping**. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons and their results in the English speaking world, from 2000 to present day. However, to perform analysis on the data, it needs to be scraped and formatted for our use case. 
 
-To scrape data from the site, I created `autoScrape`, which utilizes Selenium and Pandas.
+To scrape data from the site, we can implement `autoScrape`, which utilizes Selenium and Pandas.
 
 ### `autoScrape` in summary:
 - Input a URL that contains a years worth of marathon URLs
 - Create a list of the marathon URLs and iterate through them
-- For each URL, find the amount of columns and their titles by XPATH
-- For the URL, use table cells XPATH to collect the data by that is on the page and append it to a df...  If a more results XPATH exists, click it. 
+- For each URL 
+  - Find the amount of columns and their titles by XPATH
+  - Locate the data on that is on the page by XPATH and append it to a df  
+  - If a more results button XPATH exists, click it 
 - When the more results button no longer exists, convert the df to a csv and put it in a folder
 - Move to next race and repeat until completion
 
-Once a year is scraped, we end up with a folder conaining CSV files for each individual race in a given year. To combine all of the races into one file I wrote a quick `fileJoin` script which simply creates a CSV housing the data for an entire year of races. We then send this off to our BigQuery database for some additional cleaning and querying.
+Once a year is scraped, we end up with a folder conaining CSV files for each individual race in a given year. To combine all of the races into one file we quickly run the `fileJoin` script. This just creates a CSV housing the data for an entire year of races. We then send this off to our BigQuery database for some additional cleaning and querying.
 
 ### BigQuery
 Now that our marathon data is into our database, we can query `yearCleaner` to quickly remove some rows and columns we won't need and do some reformatting of data that got scraped weird. After this, we need to get our weather data.
@@ -71,9 +73,28 @@ Here is what we need to do:
 
 To do this we can utilize `distinctDateLoc` to query a table of these instances. We then export the results as a CSV and go back to Python to gather our weather data.
 
-Now that we're back in Python we need to access the [Visual Crossing](https://www.visualcrossing.com/) weather API.
+Now that we're back in Python we need to access the [Visual Crossing](https://www.visualcrossing.com/) weather API. To complete this task we will use `vcRequests`, which collects all the necesarry weather data for a year of marathons by reading through the CSV file we created from `distinctDateLoc`. 
+
+### Pulling from the API
+To gather our weather data we need to send requests to the Visual Crossing API. If formatted correctly, it returns us the data in the requested format. We can temporarily store the data in a df and then send it to a CSV file. Since Visual Crossing can only send us one instance of weather data per request, we need to write some code to get all the necesarry weather data for the year into one CSV.    
+
+### Formatting the Request
+Here is an example of a query request
+```
+https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?
+locations=Herndon,VA,20170&aggregateHours=24&unitGroup=us&shortColumnNames=false&contentType=csv&key=YOURAPIKEY
+```
 
 
+### `vcRequests` in summary:
+- Read the CSV file that `distinctDateLoc` created
+- Create lists of Dates, Locations, and Races 
+- For each Date, Location, and Race, format the query
+  - Format the query
+  - Query the corresponding weather data   
+  - Append the data to a df
+
+When this is complete, we end up with a CSV file of weather data that corresponds to each row of our `distinctDateLoc` CSV. Now it's time to head back to BigQuery and finalize our data.  
 
 
 
