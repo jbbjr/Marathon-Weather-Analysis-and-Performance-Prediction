@@ -123,7 +123,8 @@ To finalize the data for the given year we need to do two things:
   >  - Similar to `vcRequests`, we know are asking the BigQuery API to send us our tables so we can
   >    - Put them in a df
   >    - And then send them to a CSV file
-Once this is done, we have the necessary data to conduct analyses on a year of marathons. So this entire process just needs to be repeated for every year of marathon data available on MarathonGuide. 
+
+Once this is done, we have the necessary data to conduct analyses on a year of marathons. This entire process just needs to be repeated for every year of marathon data available on MarathonGuide. 
 
 ## Modeling
 WIP
