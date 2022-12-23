@@ -129,7 +129,7 @@ Once this is done, we have the necessary data to conduct analyses on a year of m
 The modeling stage is currently a work in progress. I have some general ideas with the data that I've compiled.
 
 #### Runner Variables we have:
-- Official Time (measured in seconds) *Independent Variable*
+- Official Time (measured in seconds) | *Independent Variable*
 - Overall Place
 - Division Place
 - Sex Place
@@ -143,7 +143,7 @@ The modeling stage is currently a work in progress. I have some general ideas wi
 - Min Temp (the low for the day)
 - Max Temp (the high for the day)
 - Average Over 24 hours for: 
-  - Temperature *Explanatory Variable of Interest*
+  - Temperature | *Explanatory Variable of Interest*
   - Dew Point 
   - Humidity (%)
   - Heat Index
