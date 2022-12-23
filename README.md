@@ -174,7 +174,7 @@ This model is a rough sketch. The data is ready, but I need to collaborate with 
 
 Additionally. The data currently scraped:
 - Raw data for years 2017, 2016
-- Cleaned data paired with weather 2019-2021 (in the model)
+- Cleaned data paired with weather 2019-2021 (in the model) (n ~1,000,000)
 
 *Note: The end goal is to conduct analysis on all 22 years, but I wanted to get something up with what I currently have gathered. I'll certainly have a model finalized this Spring semester, and adding additional data can be an ongoing process as time goes on.*
 
