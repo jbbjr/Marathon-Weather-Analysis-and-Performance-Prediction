@@ -43,8 +43,7 @@ This section is intended for readers unfamiliar with programming or econometric 
 - **Dataset**
   - A collection of tables (Excel sheets). 
 #### Econometrics
-- **Fixed Effect**:
-  - stuff 
+- 
 
 ## Marathon Data Collection and Manipulation
 Gathering the marathon data requires one large task: **Web Scraping**. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons occuring in the English speaking world from 2000 to present day, and their results. To perform analysis on all of this data, it needs to be scraped and formatted for our use case. 
