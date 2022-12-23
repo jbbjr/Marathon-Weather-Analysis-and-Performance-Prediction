@@ -129,8 +129,8 @@ Once this is done, we have the necessary data to conduct analyses on a year of m
 ## Modeling
 The modeling stage is currently a work in progress. I have some general ideas with the data that I've compiled.
 
-Runner Variables we have:
-- Official Time (measured in seconds)
+#### Runner Variables we have:
+- Official Time (measured in seconds) *Independent Variable*
 - Overall Place
 - Division Place
 - Sex Place
@@ -140,7 +140,7 @@ Runner Variables we have:
 - Race Location
 - Race Name
 
-Weather Variables we have:
+#### Weather Variables we have:
 - Min Temp (the low for the day)
 - Max Temp (the high for the day)
 - Average Over 24 hours for: 
@@ -159,8 +159,22 @@ Weather Variables we have:
   - Cloud Cover
   - Weather Type
 
-WIP
+#### An idea for a model
 
+$$
+officialtime_{it} = \beta_{0} + \beta temperature_{it} + a_{i} + \mu_{it} 
+$$
+
+#### Things I'd be interested in adding would be:
+- relevant weather variables correlated with temperature
+- a quadratic temperature^2 variable. I'm pretty certain there is a most optimal temperature
+- International (a dummy variable, takes a value of 1 if Country != Country of Race Location) 
+
+This model is a rough sketch. The data is ready, but I need to collaborate with my professors to ensure the unbiasedness of the model / what direction to take.
+
+Additionally. The data currently scraped:
+- Raw data for years 2017, 2016
+- Cleaned data paired with weather 2019-2021 (in the model)
 
 *Note: The end goal is to conduct analysis on all 22 years, but I wanted to get something up with what I currently have gathered*
 
