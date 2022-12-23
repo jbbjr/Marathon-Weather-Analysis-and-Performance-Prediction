@@ -143,7 +143,7 @@ The modeling stage is currently a work in progress. I have some general ideas wi
 - Min Temp (the low for the day)
 - Max Temp (the high for the day)
 - Average Over 24 hours for: 
-  - Temperature
+  - Temperature *Explanatory Variable of Interest*
   - Dew Point 
   - Humidity (%)
   - Heat Index
