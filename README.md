@@ -171,7 +171,7 @@ $$officialtime_{it} = \beta_{0} + \beta temperature_{it} + a_{i} + \mu_{it}$$
 - International (a dummy variable, takes a value of 1 if Country != Country of Race Location)
 - Ways we can alter the model to control for runner fixed effects, race fixed effects, and time fixed effects all at once. 
 
-This model is a rough sketch. The data is ready, but I need to collaborate with my professors to ensure the unbiasedness of the model / what direction to take.
+This model is a rough sketch. The data is ready, but I need to collaborate with my professors to ensure the unbiasedness of the model / what variables to include.
 
 Additionally. The data currently scraped:
 - Raw data for years 2017, 2016
