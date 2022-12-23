@@ -159,16 +159,17 @@ The modeling stage is currently a work in progress. I have some general ideas wi
   - Cloud Cover
   - Weather Type
 
-#### An idea for a model
 
-$$
-officialtime_{it} = \beta_{0} + \beta temperature_{it} + a_{i} + \mu_{it} 
-$$
+#### An idea for a model:
+
+$$officialtime_{it} = \beta_{0} + \beta temperature_{it} + a_{i} + \mu_{it}$$
+
 
 #### Things I'd be interested in adding would be:
 - relevant weather variables correlated with temperature
-- a quadratic temperature^2 variable. I'm pretty certain there is a most optimal temperature
-- International (a dummy variable, takes a value of 1 if Country != Country of Race Location) 
+- A $temperature^2$ variable. I'm pretty certain there is a most optimal temperature, and we could use this quadratic to find that
+- International (a dummy variable, takes a value of 1 if Country != Country of Race Location)
+- Ways we can alter the model to control for runner fixed effects, race fixed effects, and time fixed effects all at once. 
 
 This model is a rough sketch. The data is ready, but I need to collaborate with my professors to ensure the unbiasedness of the model / what direction to take.
 
@@ -176,9 +177,5 @@ Additionally. The data currently scraped:
 - Raw data for years 2017, 2016
 - Cleaned data paired with weather 2019-2021 (in the model)
 
-*Note: The end goal is to conduct analysis on all 22 years, but I wanted to get something up with what I currently have gathered*
-
-
-
-
+*Note: The end goal is to conduct analysis on all 22 years, but I wanted to get something up with what I currently have gathered. I'll certainly have a model finalized this Spring semester, and adding additional data can be an ongoing process as time goes on.*
 
