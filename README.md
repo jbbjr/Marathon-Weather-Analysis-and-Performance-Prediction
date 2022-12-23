@@ -127,7 +127,40 @@ To finalize the data for the given year we need to do two things:
 Once this is done, we have the necessary data to conduct analyses on a year of marathons. This entire process just needs to be repeated for every year of marathon data available on MarathonGuide. 
 
 ## Modeling
+The modeling stage is currently a work in progress. I have some general ideas with the data that I've compiled.
+
+Runner Variables we have:
+- Official Time (measured in seconds)
+- Overall Place
+- Division Place
+- Sex Place
+- Division
+- Gender
+- Country
+- Race Location
+- Race Name
+
+Weather Variables we have:
+- Min Temp (the low for the day)
+- Max Temp (the high for the day)
+- Average Over 24 hours for: 
+  - Temperature
+  - Dew Point 
+  - Humidity (%)
+  - Heat Index
+  - Wind Speed
+  - Wind Gust
+  - Wind Direction
+  - Wind Chill
+  - Precipitation
+  - Precipitation Cover
+  - Snow Depth
+  - Visibility
+  - Cloud Cover
+  - Weather Type
+
 WIP
+
 
 *Note: The end goal is to conduct analysis on all 22 years, but I wanted to get something up with what I currently have gathered*
 
