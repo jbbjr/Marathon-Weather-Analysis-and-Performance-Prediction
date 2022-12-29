@@ -169,6 +169,7 @@ $$officialtime_{it} = \beta_{0} + \beta temperature_{it} + a_{i} + \mu_{it}$$
 - A $temperature^2$ variable. I'm pretty certain there is a most optimal temperature, and we could use this quadratic to find that
 - International (a dummy variable, takes a value of 1 if Country != Country of Race Location)
 - Ways we can alter the model to control for runner fixed effects, race fixed effects, and time fixed effects all at once. 
+- A way to utilize Machine Learning to help me categorize and speed up the qualitative variable cleaning (International and Country, to be specific).
 
 This model is a rough sketch. The data is ready, but I need to collaborate with my professors to ensure the unbiasedness of the model / what variables to include.
 
