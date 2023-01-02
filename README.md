@@ -119,7 +119,7 @@ To finalize the data for the given year we need to do two things:
   >    - Meaning, weather data fills out wherever the marathon race matches the weather race. 
   >    - (This is why we included Race earlier in `vcRequests`)
 - Use `bqRequests` to get the finalized data from BigQuery to a CSV so we can do some modeling.
-  >  - Similar to `vcRequests`, we know are asking the BigQuery API to send us our tables so we can
+  >  - Similar to `vcRequests`, we are asking the BigQuery API to send us our tables so we can
   >    - Put them in a df
   >    - And then send them to a CSV file
 
