@@ -161,21 +161,24 @@ The modeling stage is currently a work in progress. I have some general ideas wi
 
 #### An idea for a model:
 
-$$officialtime_{it} = \beta_{0} + \beta temperature_{it} + a_{i} + \mu_{it}$$
+$$officialtime_{it} = \beta_{0} + \beta temperature_{it} + \beta race_{it} + \beta runner_{it} + \beta year_{t}  + a_{i} + \mu_{it}$$
+
+- where *i* represents a unique combination of a given runner at a given race and $a_{i}$ captures unobserved factors that vary across runners and races, but are fixed across time. For runners, we might want to control for biological factors or location factors that may give an advantage in a marathon finishing time. For races, we might want to control for the difficulty or altitude of the course, as well as how well renowned the race is (which would attract faster runners)
+- $year_{t}$ represents the given year a race was run and captures variations across time, but not across runners or races
 
 
 #### Things I'd be interested in adding would be:
 - relevant weather variables correlated with temperature
 - A $temperature^2$ variable. I'm pretty certain there is a most optimal temperature, and we could use this quadratic to find that
 - International (a dummy variable, takes a value of 1 if Country != Country of Race Location)
-- Ways we can alter the model to control for runner fixed effects, race fixed effects, and time fixed effects all at once. 
+- inclusion of a runners gender, age division, and country they reside in 
 - A way to utilize Machine Learning to help me categorize and speed up the qualitative variable cleaning (International and Country, to be specific).
 
 This model is a rough sketch. The data is ready, but I need to collaborate with my professors to ensure the unbiasedness of the model / what variables to include.
 
 Additionally. The data currently scraped:
 - Raw data for years 2017, 2016
-- Cleaned data paired with weather 2019-2021 (in the model) (n ~1,000,000)
+- Cleaned data paired with weather 2019-2022 (in the model) (n ~1,000,000)
 
 *Note: The end goal is to conduct analysis on all 22 years, but I wanted to get something up with what I currently have gathered. I'll certainly have a model finalized this Spring semester, and adding additional data can be an ongoing process as time goes on.*
 
