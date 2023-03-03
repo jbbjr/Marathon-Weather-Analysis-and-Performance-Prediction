@@ -9,6 +9,7 @@ As an avid marathoner, myself and others know how much preparation goes into a r
 - Terminology
 - Marathon Data Collection and Manipulation
 - Weather Data Collection and Manipulation
+- Creating Additional Variables with Existing Data
 - Finalizing our Data
 - Modeling
 - Interpretation and Visualization
@@ -124,6 +125,35 @@ To finalize the data for the given year we need to do two things:
   >    - And then send them to a CSV file
 
 Once this is done, we have the necessary data to conduct analyses on a year of marathons. This entire process just needs to be repeated for every year of marathon data available on MarathonGuide. 
+
+## Creating Additional Variables with Existing Data
+After all the data has been collected and compiled, there is still a lot than can be done with existing data to build new variables. To control for variation in runners, we may want to look at where they're from, their age, or gender. Most of the races provide us with this data, but each race entry form is different so we end up with many overlapping age groups and partial adresses. The most difficult of these to address is the location column.
+
+### Building the CountryOfOrigin Variable
+Most of our data has partial location information to tell us where a runner is from. However, some of these may only include a city or a smaller region within a country. We need to find a way to generalize this to the country someone is from so it can be utilized in the modelling stage. We can back into this information with help from some additional APIs.
+
+### Backing into Country
+in the `yearCleaner` query, we consolidated all of our location information into one column. This creates a comma delimited string value depending on what the entry form looked like for the given race. 
+
+Examples of variation in the isFrom column:
+- Greensboro, NC
+- Calgary
+- Paris, France
+- Boston, MA, USA
+
+We want the rightmost value so we can quickly run a line of code on a df of our dataset to build a new column which we will call *broadest*.
+
+Here's what happens when we run `df['broadest'] = df['IsFrom'].apply(lambda x: x.rsplit(',', 1)[-1].strip())` on the examples above.
+- NC
+- Calgary
+- France
+- USA
+
+This works great on the bottom two, but we still need to drill back up further for the rest. We'll put this column to the side for now and return to it later.
+
+WIP
+
+In this section I'll be transitioning over to **Stata** for some data wrangling
 
 ## Modeling
 The modeling stage is currently a work in progress. I have some general ideas with the data that I've compiled.
