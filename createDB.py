@@ -4,7 +4,7 @@ from tqdm import tqdm
 import re
 
 # set credentials (json key file that gives access to BigQuery)
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'/Users/bennett/Documents/marathonEnvironment/dbKey.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'JSONKEY'
 
 # create client object
 client = bigquery.Client(project='marathondb')
@@ -20,7 +20,7 @@ job_config = bigquery.LoadJobConfig(
 
 
 for year in range(2012, 2023):
-    year_folder = os.path.join('/Users/bennett/Documents/sumScrape', f"scrapedRaces{year}")
+    year_folder = os.path.join('PATH', f"scrapedRaces{year}")
     dataset_id = f'scrapedRaces{year}'
     # create the dataset first time through
     try: 
