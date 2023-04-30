@@ -48,12 +48,12 @@ It's likely that all of these had a play in Kipchoge's performance at Boston. No
   <tr>
     <td>
       <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output.png" alt="Image 1" width="400px" />
-      <p>Text below image 1.</p>
+      <p>Here we see two distributions of finishing times from the Boston Marathon (2012 and 2018).</p>
     </td>
     <td>
       <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output2.png
 " alt="Image 2" width="400px" />
-      <p>Text below image 2.</p>
+      <p>Why is this picture not working.</p>
     </td>
   </tr>
 </table>
