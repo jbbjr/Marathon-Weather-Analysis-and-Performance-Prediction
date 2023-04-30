@@ -85,7 +85,7 @@ SELECT DISTINCT FORMAT_DATE('%Y-%m-%d', PARSE_DATE('%B %d, %Y', Date)) as Date, 
 FROM `marathondb.scrapedRaces2012.*` 
 ```
 ### Additional Query Information
-- The Date variable we scraped is displayed as *"July, 28, 2013"*, and we are simply formatting it to 2013-06-28 to meet API syntax requirements.
+- The Date variable we scraped is displayed as *July, 28, 2013*, and we are simply formatting it to *2013-06-28* to meet API syntax requirements.
 - Along with the date, we need the location of a race so that we can get the right weather data.
 - Lastly, we need the race so we know which row to send our weather data back to. We will use it for formatting a key in a few steps.
 
