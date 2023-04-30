@@ -4,10 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-
-# fix executable_path error by importing the Service class
-from selenium.webdriver.chrome.service import Service
-s = Service(executable_path=r"driver path")
+from tqdm import tqdm
+import os
 
 # retrives an integer value representing how many columns are in a given table
 def getLength():
@@ -45,17 +43,19 @@ def getValues(columns, titles):
         values = []
         for j in range(3, 104, 1):
             path = ''
+            # path = '//table[2]/tbody/tr[1]/td[2]/table[3]/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[j]/td[i]'
             
             # row 1 col 1 returns date if you don't make path more specific
-            if i == 1 and j == 1:
-                path =  '//td/table/tbody/tr[j]/td[i]'
+            if i == 1:
+                path = '//table[2]/tbody/tr[1]/td[2]/table[3]/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[j]/td[i]'
             else:
                 path = '//tbody/tr[j]/td[i]'
 
             try:
                 xpath = path.replace("i", str(i)).replace("j", str(j))
-                contents = driver.find_element(By.XPATH, xpath);
+                contents = driver.find_element(By.XPATH, xpath)
                 values.append(contents.text)
+                contents = driver.find_element(By.TE)
             except:
                 continue
         
@@ -65,13 +65,14 @@ def getValues(columns, titles):
 
 # takes a str(URL) for a year of races
 # gets the URLs for a given year of marathons (a broader URL) and returns them as a List
-def getURLs(yearURL):    
+def getURLs(yearURL, year):   
     driver.get(str(yearURL))
 
     URLs = []
 
     raceLink = '//p/table/tbody/tr/td[2]/a[i]'
-    i = 1
+    i = restart("/Users/bennett/Documents/sumScrape/scrapedRaces" + year + "/")
+    print("starting at " + str(i) + " race")
     while True:
         try:
             iterateLink = raceLink.replace("i", str(i))
@@ -82,15 +83,32 @@ def getURLs(yearURL):
         except:
             return URLs
 
-# set up our web driver
-path = r"driver path"
-driver = webdriver.Chrome(service=s)
+# start over at the last complete race and begin scraping again (good check for when the site boots us)
+def restart(path):
+    num_files = len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))])
+    if num_files == 0:
+        return 1
+    else:
+        return num_files
 
-URLs = getURLs('http://www.marathonguide.com/results/browse.cfm?Year=2020')
+# inpurt the year and create the directory if not exists
+year = str(input("enter year to scrape: "))
+
+if not os.path.exists(r"../sumScrape/scrapedRaces" + year):
+    os.mkdir(r"../sumScrape/scrapedRaces" + year)
+    print("creating path for year")
+else:
+    print("path exists for year")
+
+# set up our web driver
+driver = webdriver.Chrome(executable_path=r"/Users/bennett/Documents/marathonEnvironment/chromedriver_mac64/chromedriver")
+
+URLs = getURLs('http://www.marathonguide.com/results/browse.cfm?Year=' + str(year), year)
+
 print(URLs)
 
 # main
-for link in range(len(URLs)):
+for link in tqdm(range(len(URLs))):
     driver.get(URLs[link])
     
     raceName = driver.find_element(By.XPATH, '//td/table[1]/tbody/tr/td[1]/b[1]').text
@@ -99,7 +117,7 @@ for link in range(len(URLs)):
     
     filename = driver.title
     filename = filename.replace(" ", "_").replace("/", "_")
-    dir = str(r"path" + "\\" + str(filename) + ".csv")
+    dir = str(r"/Users/bennett/Documents/sumScrape/scrapedRaces" + year + "/" + str(filename) + ".csv")
 
     # get the drop down for overall racers
     dropDown = Select(driver.find_element(By.NAME, "RaceRange"))
