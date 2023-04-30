@@ -44,6 +44,8 @@ It's likely that all of these had a play in Kipchoge's performance at Boston. No
 <br/><br/>
 
 # Hypothesis
+From my marathoning / running experience, I've expereciend a wide range of weather conditions. I'm under the belief that there's
+
 <table>
   <tr>
     <td>
