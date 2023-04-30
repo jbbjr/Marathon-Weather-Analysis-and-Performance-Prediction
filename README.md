@@ -47,4 +47,32 @@ Here you'll see two distributions graphs. On the left is the Boston marathon...
 ## Building the Marathon Dataset
 The first obvious step to this analysis is finding the appropriate marathon data to pair some weather data with. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons occuring in the English speaking world from 2000 to present day, and their results. Since there is an immense amount of data on this site, we can build a web scraper to automate most of the collection process and format it for our use case
 
+To scrape data from the site, we can implement `autoScrape`, which utilizes Selenium and Pandas. 
+
+This often takes 2-3 days to get the entire year, so I typically run this on a linux server and use **TMUX** to scrape multiple years at once
+
+### `autoScrape` in summary:
+- Input a year and for that given year: the script creates the URL that contains a years worth of marathon URLs
+- Create a list of the marathon URLs and iterate through them
+- For each URL 
+  - Find the amount of columns and their titles by XPATH
+  - Locate the data that is on the page by XPATH and append it to a df  
+  - If an XPATH for a more results button exists, click it 
+- When the more results button no longer exists, convert the df to a csv and put it in a folder
+- Move to next race and repeat until completion
+
+Once this is complete, we can create a database in BigQuery with all of our csv files. 
+
+***(In retrospect I would likely combine `autoScrape` and `createDB` but oh well)***
+
+### `createDB` in summary:
+- For the year folders created
+  - Create a dataset of that year if not present
+  - For each race in the year
+    - Create a table of the race if not present
+
+This happens pretty quickly. For the 11 years I've scraped it took about an hour or so. This would make sense given that this is O(n<sup>2</sup>) worst case and the webscraper is something like O(n<sup>3</sup>) best case.
+
+
+
 
