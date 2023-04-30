@@ -6,7 +6,7 @@ The marathon, a 26.2-mile race that is enjoyed by runners and spectators across 
 
 - Overview
 - Data Sources
-- Building the Weather Dataset
+- Building the Marathon Dataset
 - Contructing the Database
 - Collecting Appropriate Weather Data
 - Data Manipulation and Finalizing the Dataset
@@ -39,3 +39,11 @@ After pushing the pace until mile 20, Kipchoge hit the imfamous wall. He ended u
 - Conditions:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rain
 
 It's likely that all of these had a play in Kipchoge's performance at Boston. Now the question is, how can we quantify the impact of the weather given these circumstances?
+
+### Hypothesis
+Here you'll see two 
+
+## Building the Marathon Dataset
+The first obvious step to this analysis is finding the appropriate marathon data to pair some weather data with. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons occuring in the English speaking world from 2000 to present day, and their results. Since there is an immense amount of data on this site, we can build a web scraper to automate most of the collection process and format it for our use case
+
+
