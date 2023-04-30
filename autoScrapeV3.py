@@ -71,7 +71,7 @@ def getURLs(yearURL, year):
     URLs = []
 
     raceLink = '//p/table/tbody/tr/td[2]/a[i]'
-    i = restart("/Users/bennett/Documents/sumScrape/scrapedRaces" + year + "/")
+    i = restart("path" + year + "/")
     print("starting at " + str(i) + " race")
     while True:
         try:
@@ -94,14 +94,14 @@ def restart(path):
 # inpurt the year and create the directory if not exists
 year = str(input("enter year to scrape: "))
 
-if not os.path.exists(r"../sumScrape/scrapedRaces" + year):
-    os.mkdir(r"../sumScrape/scrapedRaces" + year)
+if not os.path.exists(r"../path" + year):
+    os.mkdir(r"../path" + year)
     print("creating path for year")
 else:
     print("path exists for year")
 
 # set up our web driver
-driver = webdriver.Chrome(executable_path=r"/Users/bennett/Documents/marathonEnvironment/chromedriver_mac64/chromedriver")
+driver = webdriver.Chrome(executable_path=r"path/chromedriver")
 
 URLs = getURLs('http://www.marathonguide.com/results/browse.cfm?Year=' + str(year), year)
 
@@ -117,7 +117,7 @@ for link in tqdm(range(len(URLs))):
     
     filename = driver.title
     filename = filename.replace(" ", "_").replace("/", "_")
-    dir = str(r"/Users/bennett/Documents/sumScrape/scrapedRaces" + year + "/" + str(filename) + ".csv")
+    dir = str(r"path" + year + "/" + str(filename) + ".csv")
 
     # get the drop down for overall racers
     dropDown = Select(driver.find_element(By.NAME, "RaceRange"))
