@@ -44,7 +44,20 @@ It's likely that all of these had a play in Kipchoge's performance at Boston. No
 <br/><br/>
 
 # Hypothesis
-Here you'll see two distributions graphs. On the left is the Boston marathon...
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output.png" alt="Image 1" width="400px" />
+      <p>Text below image 1.</p>
+    </td>
+    <td>
+      <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output2.png
+" alt="Image 2" width="400px" />
+      <p>Text below image 2.</p>
+    </td>
+  </tr>
+</table>
+
 
 ## Building the Marathon Dataset
 The first obvious step to this analysis is finding the appropriate marathon data to pair some weather data with. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons occuring in the English speaking world from 2000 to present day, and their results. Since there is an immense amount of data on this site, we can build a web scraper to automate most of the collection process and format it for our use case
