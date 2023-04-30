@@ -14,7 +14,7 @@ The marathon, a 26.2-mile race that is enjoyed by runners and spectators across 
 - Interpretation and Visualization
 - Conclusion
 <br/><br/>
-<br/><br/>
+
 <img align="right" width="500" src="https://www.wnct.com/wp-content/uploads/sites/99/2023/04/643f0950359698.51111723.jpeg?strip=1">
 
 
@@ -22,7 +22,7 @@ The marathon, a 26.2-mile race that is enjoyed by runners and spectators across 
 
 
 
-## Case Study: (Boston 2023)
+# Case Study: (Boston 2023)
 Pictured on the right is the elite mens pool from the Boston Marathon (2023), with Eliud Kipchoge leading the front of the pack. Kipchoge is regarded as the GOAT of the marathon. 
 ### Eliud Kipchoge
 - Unofficially broke the 2:00:00 barrier
@@ -39,8 +39,9 @@ After pushing the pace until mile 20, Kipchoge hit the imfamous wall. He ended u
 - Conditions:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rain
 
 It's likely that all of these had a play in Kipchoge's performance at Boston. Now the question is, how can we quantify the impact of the weather given these circumstances?
+<br/><br/>
 
-## Hypothesis
+# Hypothesis
 Here you'll see two distributions graphs. On the left is the Boston marathon...
 
 ## Building the Marathon Dataset
