@@ -4,8 +4,8 @@ The marathon, a 26.2-mile race that is enjoyed by runners and spectators across 
 
 # Organization of Project
 
-- Overview
-- Data Sources
+- Case Study: Boston (2023)
+- Hypothesis
 - Building the Marathon Dataset
 - Contructing the Database
 - Collecting Appropriate Weather Data
@@ -22,7 +22,7 @@ The marathon, a 26.2-mile race that is enjoyed by runners and spectators across 
 
 
 
-## Overview
+## Case Study: (Boston 2023)
 Pictured on the right is the elite mens pool from the Boston Marathon (2023), with Eliud Kipchoge leading the front of the pack. Kipchoge is regarded as the GOAT of the marathon. 
 ### Eliud Kipchoge
 - Unofficially broke the 2:00:00 barrier
@@ -40,8 +40,8 @@ After pushing the pace until mile 20, Kipchoge hit the imfamous wall. He ended u
 
 It's likely that all of these had a play in Kipchoge's performance at Boston. Now the question is, how can we quantify the impact of the weather given these circumstances?
 
-### Hypothesis
-Here you'll see two 
+## Hypothesis
+Here you'll see two distributions graphs. On the left is the Boston marathon...
 
 ## Building the Marathon Dataset
 The first obvious step to this analysis is finding the appropriate marathon data to pair some weather data with. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons occuring in the English speaking world from 2000 to present day, and their results. Since there is an immense amount of data on this site, we can build a web scraper to automate most of the collection process and format it for our use case
