@@ -30,7 +30,9 @@ Pictured on the right is the elite mens pool from the Boston Marathon (2023), wi
 
 All eyes were on Kipchoge April, 2023 when he came to Boston. Many expected a 1st place finish with a good margin of error, and maybe even a course record. However, this was far from the case. 
 
-After pushing the pace until mile 20, Kipchoge hit the imfamous wall. He ended up finishing 6th with a time of 2:09:43. As of now there is much speculation about what might've gone wrong. Many say it was the fact that he missed a fuel bottle at the final station. Others believe he underestimated the course, as he never actually practiced the course and only rode it once. Kipchoge claims that a leg injury at mile 18 foiled his attempt. Furthermore, the weather was absolutely brutal this year.
+After pushing the pace until mile 20, Kipchoge hit the imfamous wall. He ended up finishing 6th, with a time of 2:09:43. 
+
+As of now there is much speculation about what might've gone wrong. Many say it was the fact that he missed a fuel bottle at the final station. Others believe he underestimated the course, as he never actually practiced the course and only rode it once. Kipchoge claims that a leg injury at mile 18 foiled his attempt. Furthermore, the weather was absolutely brutal this year.
 
 ### Conditions
 - Temperature:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;48°F
@@ -63,7 +65,8 @@ This often takes 2-3 days to get the entire year, so I typically run this on a l
 
 Once this is complete, we can create a database in BigQuery with all of our csv files. 
 
-***(In retrospect I would likely combine `autoScrape` and `createDB` but oh well)***
+# Constructing the Database
+Now that we have all the necesarry marathon data in csvs, we need to create a database out of them. This will help us later when we need to relate it to the weather data we collect in the next step. Retrospectively, I would likely have combined this with the webscraper and uploaded tables to datasets rather save as csvs, but oh well :)
 
 ### `createDB` in summary:
 - For the year folders created
@@ -72,6 +75,21 @@ Once this is complete, we can create a database in BigQuery with all of our csv 
     - Create a table of the race if not present
 
 This happens pretty quickly. For the 11 years I've scraped it took about an hour or so. This would make sense given that this is O(n<sup>2</sup>) worst case and the webscraper is something like O(n<sup>3</sup>) best case.
+
+# Collecting Appropriate Weather Data
+Now that the marathon data is set up in our database we need to collect the appropriate information to help us collect the necessary weather data for our analysis. 
+
+This only requires one simple query. Here's an exmaple of the query for the year 2012. Ultimately we just write this a few times for however many years we have and use **UNION ALL** to get everything in the same query.
+```
+SELECT DISTINCT FORMAT_DATE('%Y-%m-%d', PARSE_DATE('%B %d, %Y', Date)) as Date, REPLACE(Race, " ", "_") as Race, Location  
+FROM `marathondb.scrapedRaces2012.*` 
+```
+### Additional Query Information
+- The Date variable we scraped is displayed as *"July, 28, 2013"*, and we are simply formatting it to 2013-06-28 to meet API syntax requirements.
+- Along with the date, we need the location of a race so that we can get the right weather data.
+- Lastly, we need the race so we know which row to send our weather data back to. We will use it for formatting a key in a few steps.
+
+After this is done, we can save the output as a csv and return to python to get the weather data we need.
 
 
 
