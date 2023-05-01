@@ -162,6 +162,18 @@ This query happens inside the Python script, so we can store the results as a da
 <br/><br/>
 <br/><br/>
 
+# Modeling
+Now that we have the data we need, we'll leverage some econometrics to find a causal relationship between the finishing times and the weather. With what we have, the best we can do is implement some fixed effects to try and mitigate some bias. 
+
+### Runner Fixed Effect
+We can create a runner fixed effect by identifying individuals in the dataset that we observed over time. There will be some things within a runner such as innate ability that remains fixed across time, so the runner fixed effect will help us exploit that variation without needing to explicity observe it in the model. 
+
+### Race Fixed Effect
+We also will want to create a race fixed effect by utilizing our race column. This is useful because the Race variable will capture things such as course difficulty, elevation gain, altitude, or other related variables that remain fixed across time. Additionally, since we have a large set of locations with different weather patterns and ranges of possible temperatures, the race variable does a great job of controlling for seasonality (because they always happen around the same time of the year), as well as limiting variation to what would actually be feasible in the given locaiton. 
+
+### Time Fixed Effect
+Lastly, we would want to create a time fixed effect by creating a year value, which we can strip from the date. There will be things that effect all races and runners equally on a given year and the year fixed effect allows us to acknowledge that without biasing our results (ex. Covid).
+
 
 
 
