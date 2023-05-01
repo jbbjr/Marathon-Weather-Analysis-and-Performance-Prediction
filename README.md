@@ -2,6 +2,9 @@
 
 The marathon, a 26.2-mile race that is enjoyed by runners and spectators across the globe. The sport is wildly popular and hyper competitive. Most of the attention it receives tends to center around records and the athletes who break them. As an avid marathoner, myself and others understand the amount of training required to prepare for a single race. Furthermore, we understand there are variables that can affect our performance. There variables we can train in preparation for, such as altitude or overall difficulty of a course. However, there are some variables that occur on race day which we have no control over. One of these is the weather. While there are general weather trends in certain locations, there is still a lot of variation that can occur. The question is, just how much can that variation impact a runner’s performance? To try and uncover the causal relationship between the two, I am proposing a multi-way fixed effects model to control for variation in runners, races, and time. The dataset is composed of data scraped from MarathonGuide (an online marathon database accredited by the BAA that consists of marathon results dating back to 2000, for races in English speaking parts of the world) and historical weather data gathered from a weather API called Visual Crossing.
 
+<br/><br/>
+<br/><br/>
+
 # Organization of Project
 
 - Case Study: Boston (2023)
@@ -13,6 +16,8 @@ The marathon, a 26.2-mile race that is enjoyed by runners and spectators across 
 - Modeling
 - Interpretation and Visualization
 - Conclusion
+
+<br/><br/>
 <br/><br/>
 
 <img align="right" width="500" src="https://www.wnct.com/wp-content/uploads/sites/99/2023/04/643f0950359698.51111723.jpeg?strip=1">
@@ -41,6 +46,8 @@ As of now there is much speculation about what might've gone wrong. Many say it 
 - Conditions:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rain
 
 It's likely that all of these had a play in Kipchoge's performance at Boston. Now the question is, how can we quantify the impact of the weather given these circumstances?
+
+<br/><br/>
 <br/><br/>
 
 # Hypothesis
@@ -62,12 +69,10 @@ $H_0: \beta_{temperature} = \beta_{temperature^2} = 0$
 
 $H_a: \beta_{temperature} \neq 0, \beta_{temperature^2} \neq 0$
 
-
+<br/><br/>
 <br/><br/>
 
-
-
-## Building the Marathon Dataset
+# Building the Marathon Dataset
 The first obvious step to this analysis is finding the appropriate marathon data to pair some weather data with. Fortunately, a lot of the aggregation of marathon data is already accessible. [MarathonGuide.com](http://www.marathonguide.com/index.cfm) is a database housing 100% of marathons occuring in the English speaking world from 2000 to present day, and their results. Since there is an immense amount of data on this site, we can build a web scraper to automate most of the collection process and format it for our use case
 
 To scrape data from the site, we can implement `autoScrape`, which utilizes Selenium and Pandas. 
@@ -86,8 +91,13 @@ This often takes 2-3 days to get the entire year, so I typically run this on a l
 
 Once this is complete, we can create a database in BigQuery with all of our csv files. 
 
+<br/><br/>
+<br/><br/>
+
 # Constructing the Database
-Now that we have all the necesarry marathon data in csvs, we need to create a database out of them. This will help us later when we need to relate it to the weather data we collect in the next step. Retrospectively, I would likely have combined this with the webscraper and uploaded tables to datasets rather save as csvs, but oh well :)
+Now that we have all the necesarry marathon data in csvs, we need to create a database out of them. This will help us later when we need to relate it to the weather data we collect in the next step. We'll be creating our database in Google Cloud and work with BigQuery
+
+Retrospectively, I would likely have combined this with the webscraper and uploaded tables to datasets rather save as csvs, but oh well :)
 
 ### `createDB` in summary:
 - For the year folders created
@@ -97,10 +107,13 @@ Now that we have all the necesarry marathon data in csvs, we need to create a da
 
 This happens pretty quickly. For the 11 years I've scraped it took about an hour or so. This would make sense given that this is O(n<sup>2</sup>) worst case and the webscraper is something like O(n<sup>3</sup>) best case.
 
+<br/><br/>
+<br/><br/>
+
 # Collecting Appropriate Weather Data
 Now that the marathon data is set up in our database we need to collect the appropriate information to help us collect the necessary weather data for our analysis. 
 
-This only requires one simple query. Here's an exmaple of the query for the year 2012. Ultimately we just write this a few times for however many years we have and use **UNION ALL** to get everything in the same query.
+This only requires one simple query. Here's an exmaple of the query for the year 2012. Ultimately we just write this a few times for however many years we have and use **UNION ALL** to get everything in the same query. After this is done, we can save the output as a csv and return to Python to get the weather data we need.
 ```
 SELECT DISTINCT FORMAT_DATE('%Y-%m-%d', PARSE_DATE('%B %d, %Y', Date)) as Date, REPLACE(Race, " ", "_") as Race, Location  
 FROM `marathondb.scrapedRaces2012.*` 
@@ -110,7 +123,39 @@ FROM `marathondb.scrapedRaces2012.*`
 - Along with the date, we need the location of a race so that we can get the right weather data.
 - Lastly, we need the race so we know which row to send our weather data back to. We will use it for formatting a key in a few steps.
 
-After this is done, we can save the output as a csv and return to python to get the weather data we need.
+Once we return to Python we just need to format all our results csv to meet query syntax requirements for the weather API. We will need to make a request for each observation in our csv so we can write a script to autmoate this process for us. Additionally, we will need to divide the time in the day for modeling purposes.
+
+### `vcRequests` in summary:
+- Read query results
+- Create lists for Dates, Locations, and Races
+- Create an empty dataframe
+- Pick a quarter of the day. (00:00-06:00, 06:00-12:00, 12:00-18:00, 18:00-24:00)
+- For every observation
+  - Format it to meet API syntax requirements
+  - Request the data for that quarter of the day
+  - Append the data to the empty dataframe and attach the Race name
+- Send the dataframe to a csv
+
+When this finishes, we need to send the csv back to the database. All we need to do is scale `createDB` to make one job and upload the csv as table to a newly created weather dataset.
+
+<br/><br/>
+<br/><br/>
+
+# Data Manipulation and Finalizing the Dataset
+Now we have both our marathon and weather data finalized in our database. We now need to find a way to relate everything and send it over to **Stata** to do some modeling. 
+
+### What's left
+- Relate the datasets
+- Eliminate null values
+- Store results as a csv
+
+Similar to how we utilize the Google Cloud API to send things to BigQuery, we can open up a client in Python and make requests. This makes it so we can do the rest of the job in one script.
+
+### Final Dataset Query in summary:
+- 
+
+
+
 
 
 
