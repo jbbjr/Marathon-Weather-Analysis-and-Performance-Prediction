@@ -42,8 +42,7 @@ else:
     
 
 # a file that represents a query of all distinct instaces of (Dates, Locations, Races). Date and Location for finding historical weather values, Race for joining the weather data back in BigQuery
-# distinct_vals = pd.read_csv(r'/Users/bennett/Documents/marathonEnvironment/weatherRequests.csv')
-distinct_vals = pd.read_csv('/Users/bennett/Documents/weatherData/missing_emornALTER.csv')
+distinct_vals = pd.read_csv(Query Results Path)
 
 # lists Date, Location, Race that we can iterate through for weather API queries 
 dt = distinct_vals['Date'].values.tolist()
@@ -67,8 +66,7 @@ for i in tqdm(range(len(dt))):
         print(f'ERROR for {loc[i]} on {dt[i]} for {race[i]}')
 
 # send our compiled pull request to a csv
-# main_df.to_csv(f'/Users/bennett/Documents/weatherData/weatherALL_{time}.csv')
-main_df.to_csv(f'/Users/bennett/Documents/weatherData/weatherALL_{time}V2.csv')
+main_df.to_csv(f'Path/weatherALL_{time}.csv')
 
 print('Pull request complete!')
 
