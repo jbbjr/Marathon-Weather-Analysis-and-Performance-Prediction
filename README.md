@@ -44,21 +44,27 @@ It's likely that all of these had a play in Kipchoge's performance at Boston. No
 <br/><br/>
 
 # Hypothesis
-From my marathoning / running experience, I've expereciend a wide range of weather conditions. I'm under the belief that there's
+From my marathoning / running experience, I've expereciend a wide range of weather conditions. Furthermore, I'm under the belief that there's likely an optimal range of temperatures to run a race in. To explore this idea, look at the two graphs below. The graphs below display a distribution of finishing times from the Boston and Fort Smith Marathon, respectively. In the legend, you'll see the year and average temperature at for the race.
 
-<table>
-  <tr>
-    <td>
-      <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output.png" alt="Image 1" width="400px" />
-      <p>Here we see two distributions of finishing times from the Boston Marathon (2012 and 2018).</p>
-    </td>
-    <td>
-      <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output2.png
-" alt="Image 2" width="400px" />
-      <p>Why is this picture not working.</p>
-    </td>
-  </tr>
-</table>
+| <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output.png" alt="Image 1" style="max-width: 100%;"> | <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output2.png" alt="Image 2" style="max-width: 100%;"> |
+| :---: | :---: |
+
+### Things to notice from these distributions
+- When the Boston Marathon was 70°F in 2018, the average finishing time was around 30 minutes slower
+- When the Fort Smith Marathon was 25°F in 2018, the average finishing time was around 30 minutes slower as well
+- Average finishing times when the temperature is in the 40°F zone seem to be faster 
+
+To confirm this hypothesis we will need to test joint significance of temperature and its quadratic when we construct our model. 
+
+It will look something like this:
+
+$H_0: \beta_{temperature} = \beta_{temperature^2} = 0$
+
+$H_a: \beta_{temperature} \neq 0, \beta_{temperature^2} \neq 0$
+
+
+<br/><br/>
+
 
 
 ## Building the Marathon Dataset
