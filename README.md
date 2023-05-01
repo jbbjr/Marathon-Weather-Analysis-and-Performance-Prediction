@@ -123,7 +123,7 @@ FROM `marathondb.scrapedRaces2012.*`
 - Along with the date, we need the location of a race so that we can get the right weather data.
 - Lastly, we need the race so we know which row to send our weather data back to. We will use it for formatting a key in a few steps.
 
-Once we return to Python we just need to format all our results csv to meet query syntax requirements for the weather API. We will need to make a request for each observation in our csv so we can write a script to autmoate this process for us. Additionally, we will need to divide the time in the day for modeling purposes.
+Once we return to Python we just need to format all our results csv to meet query syntax requirements for the weather API. We will need to make a request for each observation in our csv so we can write a script to autmoate this process for us. Additionally, we will need to divide the time in the day for modeling purposes. This will result in 4 weather tables, based on quarters of the day.
 
 ### `vcRequests` in summary:
 - Read query results
@@ -136,7 +136,7 @@ Once we return to Python we just need to format all our results csv to meet quer
   - Append the data to the empty dataframe and attach the Race name
 - Send the dataframe to a csv
 
-When this finishes, we need to send the csv back to the database. All we need to do is scale `createDB` to make one job and upload the csv as table to a newly created weather dataset.
+When this finishes, we need to send the four csvs back to the database. All we need to do is scale `createDB` to make one job and upload them as tables to a newly created weather dataset.
 
 <br/><br/>
 <br/><br/>
@@ -152,9 +152,15 @@ Now we have both our marathon and weather data finalized in our database. We now
 Similar to how we utilize the Google Cloud API to send things to BigQuery, we can open up a client in Python and make requests. This makes it so we can do the rest of the job in one script.
 
 ### Final Dataset Query in summary:
-- 
+- Select distinct obsevations from our marathon dataset
+- Create a key for each observation to help identify which weather data corresponds to it: (key = Race_Loation_Date)
+- Left join the weather data back to the marathon data based on the key
+- Eliminate any rows where a column has a missing observation
 
+This query happens inside the Python script, so we can store the results as a dataframe and then convert it to a csv.
 
+<br/><br/>
+<br/><br/>
 
 
 
