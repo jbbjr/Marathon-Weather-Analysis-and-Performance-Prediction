@@ -111,7 +111,7 @@ This happens pretty quickly. For the 11 years I've scraped it took about an hour
 <br/><br/>
 
 # Collecting Appropriate Weather Data
-Now that the marathon data is set up in our database we need to collect the appropriate information to help us collect the necessary weather data for our analysis. 
+Now that the marathon data is set up in our database we need to collect the appropriate information to help us collect the necessary weather data for our analysis.  
 
 This only requires one simple query. Here's an exmaple of the query for the year 2012. Ultimately we just write this a few times for however many years we have and use **UNION ALL** to get everything in the same query. After this is done, we can save the output as a csv and return to Python to get the weather data we need.
 ```
@@ -123,7 +123,9 @@ FROM `marathondb.scrapedRaces2012.*`
 - Along with the date, we need the location of a race so that we can get the right weather data.
 - Lastly, we need the race so we know which row to send our weather data back to. We will use it for formatting a key in a few steps.
 
-Once we return to Python we just need to format all our results csv to meet query syntax requirements for the weather API. We will need to make a request for each observation in our csv so we can write a script to autmoate this process for us. Additionally, we will need to divide the time in the day for modeling purposes. This will result in 4 weather tables, based on quarters of the day.
+Once we return to Python we just need to format all our results csv to meet query syntax requirements for the weather API. For this part, we can use the [Visual Crossing](https://www.visualcrossing.com/) weather API, which has data for weather just about anywhere on the globe, dating back to 100 years. 
+
+Since our API can only process one request per query, we will need to make a query for each individual observation in our csv. We can write a script to autmoate this process for us. Additionally, we will need to divide the time in the day for modeling purposes. This will result in 4 weather tables, based on quarters of the day.
 
 ### `vcRequests` in summary:
 - Read query results
@@ -326,4 +328,21 @@ test temp6_12 temp6_12sq
 ```
 
 This confirms our initial hypothesis and if we look at the sign, we see that as temperature increases, time will increase at an increasing rate. On the latter, we can infer that as temperature decreases, time will decrease at a decreasing rate.
+
+<br/><br/>
+<br/><br/>
+
+# Conclusion
+To wrap things up, here's what we've done so far:
+
+- Constructed a database of marathon and weather data by leveraging
+  - Web scraping
+  - Various API packages
+- Constructed an unbalanced panel dataset with SQL
+- Leveraged econometric techniques to run multiple regressions
+- Discovered the existence of an optimal range of temperature for running a marathon
+- Quantified the effect of a 1°F increase on marathon finishing times (Still likely overpredicting)
+
+As of now this is a great start, but there is still lots of work to be done! To anyone who comes across this, I am always open to suggestions on how to further improve any of these processes.   
+
 
