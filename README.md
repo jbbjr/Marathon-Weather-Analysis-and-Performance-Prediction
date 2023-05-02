@@ -51,7 +51,7 @@ It's likely that all of these had a play in Kipchoge's performance at Boston. No
 <br/><br/>
 
 # Hypothesis
-From my marathoning / running experience, I've expereciend a wide range of weather conditions. Furthermore, I'm under the belief that there's likely an optimal range of temperatures to run a race in. To explore this idea, look at the two graphs below. The graphs below display a distribution of finishing times from the Boston and Fort Smith Marathon, respectively. In the legend, you'll see the year and average temperature at for the race.
+From my marathoning / running experience, I've expereciend a wide range of weather conditions. Furthermore, I'm under the belief that there's likely an optimal range of temperatures to run a race in. To explore this idea, look at the two graphs below. These graphs display a distribution of finishing times from the Boston and Fort Smith Marathon, respectively. In the legend, you'll see the year and average temperature at for the race.
 
 | <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output.png" alt="Image 1" style="max-width: 100%;"> | <img src="https://github.com/jbblancojr/Marathon-Weather-Analysis-and-Performance-Prediction/raw/main/images/output2.png" alt="Image 2" style="max-width: 100%;"> |
 | :---: | :---: |
