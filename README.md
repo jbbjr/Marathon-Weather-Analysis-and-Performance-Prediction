@@ -174,7 +174,58 @@ We also will want to create a race fixed effect by utilizing our race column. Th
 ### Time Fixed Effect
 Lastly, we would want to create a time fixed effect by creating a year value, which we can strip from the date. There will be things that effect all races and runners equally on a given year and the year fixed effect allows us to acknowledge that without biasing our results (ex. Covid).
 
+## Regression Results
+In a real econometrics article we would include a model of OLS and one for each fixed effect combination. This is so that we can discuss potential bias in the model. I've uploaded each regression output in the project branch, but I'll only touch on OLS and our final multi-way fixed effects model here in the readme.
 
+### OLS
+```
+reg seconds overall divplace sexplace temp0_6 temp6_12 temp12_18 temp18_24 dew0_6 dew6_12 dew12_18 dew18_24 humidity0_6 humidity6_12 humidity12_18 humidity18_24 windspeed0_6 windspeed6_12 windspeed12_18 windspeed18_24 precipitation0_6 precipitation6_12 precipitation12_18 precipitation18_24 snowdepth0_6 snowdepth6_12 snowdepth12_18 snowdepth18_24 cloudcover0_6 cloudcover6_12 cloudcover12_18 cloudcover18_24
+
+      Source |       SS           df       MS      Number of obs   = 2,700,351
+-------------+----------------------------------   F(31, 2700319)  =  23762.96
+       Model |  8.9957e+12        31  2.9018e+11   Prob > F        =    0.0000
+    Residual |  3.2975e+13 2,700,319  12211597.2   R-squared       =    0.2143
+-------------+----------------------------------   Adj R-squared   =    0.2143
+       Total |  4.1971e+13 2,700,350  15542763.5   Root MSE        =    3494.5
+
+------------------------------------------------------------------------------------
+           seconds | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------------+----------------------------------------------------------------
+           overall |   .2160335    .000638   338.61   0.000     .2147831     .217284
+          divplace |  -.5053262   .0038101  -132.63   0.000    -.5127938   -.4978586
+          sexplace |  -.0578157   .0012816   -45.11   0.000    -.0603275   -.0553039
+           temp0_6 |   1131.544   9.612029   117.72   0.000     1112.705    1150.383
+          temp6_12 |  -850.1868   16.26787   -52.26   0.000    -882.0712   -818.3023
+         temp12_18 |  -71.42497   13.26307    -5.39   0.000    -97.42012   -45.42982
+         temp18_24 |   144.5754    4.75257    30.42   0.000     135.2605    153.8902
+            dew0_6 |  -1208.196   9.824326  -122.98   0.000    -1227.451    -1188.94
+           dew6_12 |   1117.942   16.49128    67.79   0.000      1085.62    1150.264
+          dew12_18 |  -112.9863   12.82442    -8.81   0.000    -138.1217   -87.85092
+          dew18_24 |   -108.806   4.232813   -25.71   0.000    -117.1021   -100.5098
+       humidity0_6 |   541.3498   4.036234   134.12   0.000      533.439    549.2607
+      humidity6_12 |  -512.5537   7.123169   -71.96   0.000    -526.5148   -498.5925
+     humidity12_18 |   101.2661   6.019033    16.82   0.000     89.46898    113.0632
+     humidity18_24 |   51.44953   2.441613    21.07   0.000     46.66406    56.23501
+      windspeed0_6 |  -130.0951      1.389   -93.66   0.000    -132.8175   -127.3727
+     windspeed6_12 |   105.1411   1.753498    59.96   0.000     101.7044    108.5779
+    windspeed12_18 |   26.78943   1.262412    21.22   0.000     24.31514    29.26371
+    windspeed18_24 |  -10.71528   .7122034   -15.05   0.000    -12.11118   -9.319391
+  precipitation0_6 |   181.9149   22.07843     8.24   0.000     138.6419    225.1878
+ precipitation6_12 |  -1661.829   28.27891   -58.77   0.000    -1717.255   -1606.404
+precipitation12_18 |  -303.5623   19.31044   -15.72   0.000    -341.4101   -265.7145
+precipitation18_24 |   707.0028   10.71005    66.01   0.000     686.0115    727.9941
+      snowdepth0_6 |   440.7184   15.88075    27.75   0.000     409.5927    471.8441
+     snowdepth6_12 |  -4950.852   358.2737   -13.82   0.000    -5653.056   -4248.649
+    snowdepth12_18 |   9797.631   492.5832    19.89   0.000     8832.185    10763.08
+    snowdepth18_24 |  -4885.518   246.0258   -19.86   0.000     -5367.72   -4403.316
+     cloudcover0_6 |   6.383141   .3050195    20.93   0.000     5.785313    6.980968
+    cloudcover6_12 |  -20.73439   .5364639   -38.65   0.000    -21.78584   -19.68294
+   cloudcover12_18 |  -9.855757   .5689096   -17.32   0.000     -10.9708   -8.740714
+   cloudcover18_24 |   10.17149     .35701    28.49   0.000     9.471766    10.87122
+             _cons |  -3531.852   70.26401   -50.27   0.000    -3669.567   -3394.137
+------------------------------------------------------------------------------------
+
+```
 
 
 
