@@ -178,6 +178,9 @@ Lastly, we would want to create a time fixed effect by creating a year value, wh
 In a real econometrics article we would include a model of OLS and one for each fixed effect combination. This is so that we can discuss potential bias in the model. I've uploaded each regression output in the project branch, but I'll only touch on OLS and our final multi-way fixed effects model here in the readme.
 
 ### OLS
+
+OLS doesn't really tell us anything as we aren't exploiting any variation. Our key variables of interest are temp6_12 and tempSQ (highlighted). Since our coefficient is negative for temperature, meaning that as temperature increases, runners become faster, we can be certain that there is some bias in the model because this is not the sign we would expect. Additionally, because of this bias we cannot tell anything from the quadratic term.
+
 ``` stata
 reg seconds age isMale temp6_12sq overall divplace sexplace temp0_6 temp6_12 temp12_18 temp18_24 
 dew0_6 dew6_12 dew12_18 dew18_24 humidity0_6 humidity6_12 humidity12_18 humidity18_24 
@@ -195,14 +198,14 @@ cloudcover0_6 cloudcover6_12 cloudcover12_18 cloudcover18_24
 ------------------------------------------------------------------------------------
            seconds | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
 -------------------+----------------------------------------------------------------
+         "temp6_12 |  -1063.504   15.87246   -67.00   0.000    -1094.613   -1032.395"
+       "temp6_12sq |   2.983099   .0174215   171.23   0.000     2.948954    3.017245"
                age |   34.06994   .1880986   181.13   0.000     33.70127     34.4386
             isMale |  -1608.826   5.239671  -307.05   0.000    -1619.096   -1598.557
-        temp6_12sq |   2.983099   .0174215   171.23   0.000     2.948954    3.017245
            overall |   .0870705   .0007693   113.18   0.000     .0855627    .0885783
           divplace |  -.3618438   .0038143   -94.86   0.000    -.3693198   -.3543678
           sexplace |   .1738191   .0015264   113.88   0.000     .1708274    .1768108
            temp0_6 |   1103.079   9.363336   117.81   0.000     1084.727    1121.431
-          temp6_12 |  -1063.504   15.87246   -67.00   0.000    -1094.613   -1032.395
          temp12_18 |  -235.3364   12.95616   -18.16   0.000      -260.73   -209.9428
          temp18_24 |   194.6448    4.63798    41.97   0.000     185.5545    203.7351
             dew0_6 |  -1220.037   9.566712  -127.53   0.000    -1238.787   -1201.286
@@ -231,9 +234,78 @@ precipitation18_24 |   833.1807   10.44521    79.77   0.000     812.7085     853
    cloudcover18_24 |   9.709904   .3475835    27.94   0.000     9.028653    10.39116
              _cons |   5969.679   87.97727    67.85   0.000     5797.246    6142.111
 ------------------------------------------------------------------------------------
+```
+
+### Multi-Way Fixed Effects
+
+```stata
+reghdfe seconds age isMale temp6_12sq overall divplace sexplace temp0_6 temp6_12 temp12_18 
+temp18_24 dew0_6 dew6_12 dew12_18 dew18_24 humidity0_6 humidity6_12 humidity12_18 humidity18_24 
+windspeed0_6 windspeed6_12 windspeed12_18 windspeed18_24 precipitation0_6 precipitation6_12 
+precipitation12_18 precipitation18_24 snowdepth0_6 snowdepth6_12 snowdepth12_18 snowdepth18_24 
+cloudcover0_6 cloudcover6_12 cloudcover12_18 cloudcover18_24, 
+absorb(raceID runnerID year)
+
+(dropped 707 singleton observations)
+(MWFE estimator converged in 16 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,642,185
+Absorbing 3 HDFE groups                           F(  34,1244417) =   11744.38
+                                                  Prob > F        =     0.0000
+                                                  R-squared       =     0.7926
+                                                  Adj R-squared   =     0.7263
+                                                  Within R-sq.    =     0.2429
+                                                  Root MSE        =  2049.1911
+
+------------------------------------------------------------------------------------
+           seconds | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------------+----------------------------------------------------------------
+         "temp6_12 |   106.3919   15.95486     6.67   0.000      75.1209    137.6628"
+       "temp6_12sq |   1.071027   .0198147    54.05   0.000     1.032191    1.109863"
+               age |   33.43476   .3693746    90.52   0.000      32.7108    34.15872
+            isMale |  -1083.079   36.65458   -29.55   0.000    -1154.921   -1011.238
+           overall |   .1578759   .0010311   153.11   0.000     .1558549     .159897
+          divplace |   .1006977   .0042485    23.70   0.000     .0923709    .1090245
+          sexplace |   .1542226   .0019596    78.70   0.000     .1503819    .1580633
+           temp0_6 |  -38.46225   9.266626    -4.15   0.000    -56.62452   -20.29998
+         temp12_18 |  -272.8644    13.0169   -20.96   0.000    -298.3771   -247.3517
+         temp18_24 |   103.4986   4.903797    21.11   0.000     93.88735    113.1099
+            dew0_6 |   64.88545   9.483993     6.84   0.000     46.29715    83.47375
+           dew6_12 |  -239.4708   15.82593   -15.13   0.000    -270.4891   -208.4525
+          dew12_18 |    318.594   12.21134    26.09   0.000     294.6602    342.5279
+          dew18_24 |  -136.9102   4.306018   -31.80   0.000    -145.3498   -128.4706
+       humidity0_6 |  -41.75705   3.910367   -10.68   0.000    -49.42124   -34.09286
+      humidity6_12 |   110.2884   6.885749    16.02   0.000     96.79253    123.7842
+     humidity12_18 |  -140.7867    5.85131   -24.06   0.000    -152.2551   -129.3183
+     humidity18_24 |   70.61606   2.458117    28.73   0.000     65.79823    75.43388
+      windspeed0_6 |  -15.99174   1.443453   -11.08   0.000    -18.82086   -13.16262
+     windspeed6_12 |   14.69561   1.839387     7.99   0.000     11.09047    18.30074
+    windspeed12_18 |   5.333335   1.290633     4.13   0.000     2.803738    7.862931
+    windspeed18_24 |   8.423932   .6802589    12.38   0.000     7.090648    9.757216
+  precipitation0_6 |   234.0194   20.05804    11.67   0.000     194.7063    273.3325
+ precipitation6_12 |  -234.8266   25.72512    -9.13   0.000     -285.247   -184.4062
+precipitation12_18 |   209.3994   18.23993    11.48   0.000     173.6498     245.149
+precipitation18_24 |   -282.022   9.856378   -28.61   0.000    -301.3401   -262.7038
+      snowdepth0_6 |   117.3391   27.17448     4.32   0.000     64.07806    170.6002
+     snowdepth6_12 |  -111.4945   417.3846    -0.27   0.789    -929.5541    706.5651
+    snowdepth12_18 |  -1.574619   561.5132    -0.00   0.998    -1102.121    1098.972
+    snowdepth18_24 |   31.13829   245.2376     0.13   0.899    -449.5191    511.7957
+     cloudcover0_6 |   2.005489   .2871415     6.98   0.000     1.442701    2.568276
+    cloudcover6_12 |  -3.229763   .4979031    -6.49   0.000    -4.205636    -2.25389
+   cloudcover12_18 |   1.470228    .546621     2.69   0.007     .3988697    2.541587
+   cloudcover18_24 |  -.1459595   .3616966    -0.40   0.687    -.8548725    .5629534
+             _cons |   14396.46   105.6101   136.32   0.000     14189.47    14603.45
+------------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+-----------------------------------------------------+
+ Absorbed FE | Categories  - Redundant  = Num. Coefs |
+-------------+---------------------------------------|
+      raceID |       743           0         743     |
+    runnerID |    396982           1      396981     |
+        year |        11           1          10    ?|
+-----------------------------------------------------+
 
 
 ```
-OLS doesn't really tell us anything as we aren't exploiting any variation. Our key variables of interest are temp6_12 and tempSQ. 
-
 
