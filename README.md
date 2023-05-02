@@ -238,6 +238,8 @@ precipitation18_24 |   833.1807   10.44521    79.77   0.000     812.7085     853
 
 ### Multi-Way Fixed Effects
 
+Once we run our fixed effects, we get a better idea of the effect of the temperature. We find that for every 1°F increase, the average finishing time for an individuals marathon increases by 106 seconds on average, holding all else constant (Cetaris Paribus). 
+
 ```stata
 reghdfe seconds age isMale temp6_12sq overall divplace sexplace temp0_6 temp6_12 temp12_18 
 temp18_24 dew0_6 dew6_12 dew12_18 dew18_24 humidity0_6 humidity6_12 humidity12_18 humidity18_24 
@@ -308,4 +310,20 @@ Absorbed degrees of freedom:
 
 
 ```
+
+### Joint Significance
+
+Additionally, we can run a joint significance test in stata to see if our hypothesis is true. 
+
+```stata
+test temp6_12 temp6_12sq
+
+ ( 1)  temp6_12 = 0
+ ( 2)  temp6_12sq = 0
+
+       F(  2,1244417) = 1551.83
+            Prob > F =    0.0000
+```
+
+This confirms our initial hypothesis and if we look at the sign, we see that as temperature increases, time will increase at an increasing rate. On the latter, we can infer that as temperature decreases, time will decrease at a decreasing rate.
 
