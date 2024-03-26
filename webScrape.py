@@ -35,33 +35,6 @@ def get_urls(year_url):
     return races
 
 
-# gets the page URLs for a given marathon (a url from get_urls) and returns them as a list
-def collect_pages(race_url):
-    url = race_url
-    response = requests.get(url)
-    html = response.text
-    soup = BeautifulSoup(html, 'html.parser')
-
-    # think this is a scraper check. replace to bypass?
-    url = url.replace('?', '?RL=1&')
-    
-    # get the overall results drop down
-    overall_results = soup.find('select', attrs={'name': 'RaceRange'})
-
-    # collect all the <option> tags within the <select> tag, these are the race pages
-    options = overall_results.find_all('option')
-
-    # Iterate through each option and construct it into the page URL (should always have 4 elements: gender, start, end, max)
-    pages = []
-    for option in options:
-        if option['value']:
-            option = option['value'].split(',')
-            page = f'{url}&Gen={option[0]}&Begin={option[1]}&End={option[2]}&Max={option[3]}'
-            pages.append(page)
-
-    return pages
-
-
 def begin(race_url, page):
     driver.get(race_url)
     
@@ -94,7 +67,7 @@ def crawl(driver, page):
         
         else:
             print('Error collecting page source')
-            
+
 
         race_df = pd.concat([get_values(html), race_df])
 
@@ -138,7 +111,7 @@ def get_values(page_source):
     return pd.DataFrame(data=data, columns=column_names)
 
 
-# main
+# input and year
 year = input('input the year to scrape: ')
 base_url = f"https://www.marathonguide.com/results/browse.cfm?Year={year}"
 
@@ -151,9 +124,11 @@ options = webdriver.ChromeOptions()
 service = ChromeService(executable_path='./chromedriver')
 driver = webdriver.Chrome(service=service, options=options)
 
-begin(races[7], start)
+for race in races:
+    start = 0
+    begin(races[7], start)
+    df, page = crawl(driver, start)
 
-df, page = crawl(driver, start)
 
 print(df.info())
 print(df)
